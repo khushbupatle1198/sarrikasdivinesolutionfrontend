@@ -1,0 +1,135 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+}
+
+.formContainer {
+  background: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.formGroup input,
+.formGroup textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.formGroup textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.submitButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.submitButton:hover {
+  background-color: #45a049;
+}
+
+.cancelButton {
+  background-color: #f44336;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.cancelButton:hover {
+  background-color: #d32f2f;
+}
+
+.coursesList {
+  margin-top: 20px;
+}
+
+.coursesTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.coursesTable th,
+.coursesTable td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.coursesTable th {
+  background-color: #f2f2f2;
+}
+
+.coursesTable tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.coursesTable tr:hover {
+  background-color: #f1f1f1;
+}
+
+.editButton {
+  background-color: #2196F3;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.editButton:hover {
+  background-color: #0b7dda;
+}
+
+.deleteButton {
+  background-color: #f44336;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  background-color: #d32f2f;
+}
+
+.courseLogo {
+  width: 50px;         /* or adjust to your needs */
+  height: 50px;
+  border-radius: 50%;  /* makes it circular */
+  object-fit: cover;   /* ensures image fits without distortion */
+  border: 2px solid #ccc; /* optional: gives a subtle border */
+}

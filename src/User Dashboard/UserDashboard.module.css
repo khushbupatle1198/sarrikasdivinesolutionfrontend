@@ -1,0 +1,509 @@
+/* User Dashboard Styles */
+.dashboard {
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  min-height: 100vh;
+}
+
+.header {
+  background: linear-gradient(135deg, #6a1b9a, #8e24aa);
+  color: white;
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.headerTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.container {
+  display: flex;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.sidebar {
+  width: 300px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  padding: 1.5rem;
+  margin-right: 2rem;
+}
+
+.profile {
+  text-align: center;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 1.5rem;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  background: #f3e5f5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 2.5rem;
+}
+
+.profileCompletion {
+  margin: 1rem 0;
+}
+
+.progressBar {
+  height: 8px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #6a1b9a, #8e24aa);
+  border-radius: 4px;
+}
+
+.editProfileButton {
+  background: #6a1b9a;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.editProfileButton:hover {
+  background: #8e24aa;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.navItem {
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 0.8rem 1rem;
+  margin: 0.2rem 0;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #555;
+  transition: all 0.3s ease;
+}
+
+.navIcon {
+  margin-right: 0.8rem;
+  font-size: 1.1rem;
+}
+
+.navItem:hover, .navItemActive {
+  background: #f3e5f5;
+  color: #6a1b9a;
+}
+
+.logoutButton {
+  color: #ff4757;
+  margin-top: 1rem;
+}
+
+.logoutButton:hover {
+  background: #ffebee;
+}
+
+.mainContent {
+  flex: 1;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  padding: 2rem;
+}
+
+.courseGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.courseCard {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.courseCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.courseThumbnail {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+
+.courseThumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.progressIndicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: rgba(255,255,255,0.3);
+}
+
+.progressIndicator .progressBar {
+  height: 100%;
+  background: #6a1b9a;
+  border-radius: 0;
+}
+
+.courseDetails {
+  padding: 1.5rem;
+}
+
+.courseTitle {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+}
+
+.instructor {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.progressText {
+  font-weight: 500;
+  margin: 0.5rem 0;
+}
+
+.lastAccessed {
+  color: #888;
+  font-size: 0.85rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.continueButton {
+  background: #6a1b9a;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.continueButton:hover {
+  background: #8e24aa;
+}
+
+/* Events Section */
+.eventsList {
+  margin-top: 1.5rem;
+}
+
+.eventCard {
+  display: flex;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.eventDate {
+  background: #f3e5f5;
+  border-radius: 8px;
+  padding: 0.8rem;
+  text-align: center;
+  margin-right: 1.5rem;
+  min-width: 60px;
+}
+
+.date {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #6a1b9a;
+}
+
+.month {
+  font-size: 0.9rem;
+  color: #8e24aa;
+}
+
+.eventActions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.addCalendarButton, .joinButton {
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.addCalendarButton {
+  background: #f3e5f5;
+  color: #6a1b9a;
+  border: 1px solid #d1c4e9;
+}
+
+.joinButton {
+  background: #6a1b9a;
+  color: white;
+  border: none;
+}
+
+/* Profile Section */
+.profileForm {
+  margin-top: 1.5rem;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.interestsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.interestOption {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.saveButton {
+  background: #6a1b9a;
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+/* Consultations Section */
+.consultationStatus {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.statusCard {
+  flex: 1;
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.statusCard h4 {
+  margin-top: 0;
+  font-size: 1rem;
+}
+
+.statusCard .count {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+.upcoming {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.completed {
+  background: #e8f5e9;
+  color: #388e3c;
+}
+
+.requested {
+  background: #fff3e0;
+  color: #ffa000;
+}
+
+.consultationCard {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.expert {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.expertAvatar {
+  width: 50px;
+  height: 50px;
+  background: #f3e5f5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  font-size: 1.5rem;
+}
+
+.bookNewButton {
+  background: #6a1b9a;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+/* Settings Section */
+.settingsTabs {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.settingsTab {
+  padding: 0.8rem 1.5rem;
+  background: none;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.settingsTabActive {
+  background: #6a1b9a;
+  color: white;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin-right: 1rem;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #6a1b9a;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .courseGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .headerTitle {
+    font-size: 2rem;
+  }
+
+  .interestsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .consultationStatus {
+    flex-direction: column;
+  }
+}

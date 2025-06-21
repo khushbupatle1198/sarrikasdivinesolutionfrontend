@@ -1,0 +1,287 @@
+.eReportManagement {
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  background-color: #f5f7fa;
+}
+
+/* All other CSS remains the same as ConsultationManagement.css */
+/* Just replace all instances of .consultation with .eReport */
+.errorAlert {
+  padding: 12px 15px;
+  background-color: #ffebee;
+  color: #c62828;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  border-left: 4px solid #c62828;
+}
+
+.errorAlert i {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.cardHeader {
+  padding: 15px 20px;
+  border-bottom: 1px solid #eaeaea;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa;
+}
+
+.cardHeader h4 {
+  margin: 0;
+  font-size: 18px;
+  color: #2c3e50;
+}
+
+.eReportForm {
+  padding: 20px;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #495057;
+  font-size: 14px;
+}
+
+.formGroup input[type="text"],
+.formGroup input[type="number"],
+.formGroup textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.formGroup input[type="text"]:focus,
+.formGroup input[type="number"]:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.formGroup textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.fileUploadContainer {
+  margin-top: 10px;
+}
+
+.fileInput {
+  display: none;
+}
+
+.fileUploadBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 15px;
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 14px;
+}
+
+.fileUploadBtn:hover {
+  background-color: #dee2e6;
+}
+
+.fileUploadBtn i {
+  margin-right: 8px;
+}
+
+.imagePreview {
+  margin-top: 15px;
+}
+
+.imagePreview img {
+  max-width: 200px;
+  max-height: 150px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  object-fit: contain;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+.primaryBtn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.primaryBtn:hover {
+  background-color: #0069d9;
+}
+
+.primaryBtn:disabled {
+  background-color: #b3d7ff;
+  cursor: not-allowed;
+}
+
+.primaryBtn i {
+  margin-right: 8px;
+}
+
+.secondaryBtn {
+  padding: 10px 20px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.secondaryBtn:hover {
+  background-color: #5a6268;
+}
+
+.loading {
+  padding: 30px;
+  text-align: center;
+  color: #6c757d;
+  font-size: 16px;
+}
+
+.loading i {
+  margin-right: 10px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.tableContainer {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eaeaea;
+  vertical-align: top;
+}
+
+.table tr:hover td {
+  background-color: #f8f9fa;
+}
+
+.pointsList {
+  margin: 0;
+  padding-left: 18px;
+  list-style-type: disc;
+}
+
+.pointsList li {
+  margin-bottom: 5px;
+  line-height: 1.4;
+}
+
+.thumbnail {
+  max-width: 60px;
+  max-height: 60px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.actionBtn {
+  background: none;
+  border: none;
+  color: #6c757d;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
+  transition: color 0.3s;
+}
+
+.actionBtn:hover {
+  color: #007bff;
+}
+
+/* Price column specific styles */
+.table td:nth-child(3) {
+  white-space: nowrap;
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .eReportManagement {
+    padding: 10px;
+  }
+  
+  .cardHeader {
+    padding: 12px 15px;
+  }
+  
+  .eReportForm {
+    padding: 15px;
+  }
+  
+  .table th, 
+  .table td {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+  
+  .thumbnail {
+    max-width: 40px;
+    max-height: 40px;
+  }
+}

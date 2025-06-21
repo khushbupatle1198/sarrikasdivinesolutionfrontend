@@ -1,0 +1,264 @@
+/* Numerology Inspired Styles */
+:root {
+  --login-primary-color: #6d4aff; /* Spiritual purple */
+  --login-primary-light: #8a6dff;
+  --login-secondary-color: #5a2d9c;
+  --login-success-color: #4cc9f0;
+  --login-error-color: #ff4757;
+  --login-background-color: #f5f6fa;
+  --login-text-color: #2f3542;
+  --login-light-gray: #dfe4ea;
+  --login-white: #ffffff;
+  --login-dark: #1e272e;
+}
+
+/* Numerology Background with Rotating Patterns */
+.loginPage {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background-color: #f5f6fa;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(109, 74, 255, 0.05) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba(109, 74, 255, 0.05) 0%, transparent 20%),
+    linear-gradient(135deg, transparent 49.5%, rgba(109, 74, 255, 0.03) 49.5%, rgba(109, 74, 255, 0.03) 50.5%, transparent 50.5%),
+    linear-gradient(45deg, transparent 49.5%, rgba(109, 74, 255, 0.03) 49.5%, rgba(109, 74, 255, 0.03) 50.5%, transparent 50.5%);
+  background-size: 100px 100px;
+}
+
+/* Rotating Numerology Circles */
+.loginPage::before {
+  content: '';
+  position: absolute;
+  width: 300%;
+  height: 300%;
+  top: -100%;
+  left: -100%;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(109, 74, 255, 0.03) 0%, transparent 15%),
+    radial-gradient(circle at 80% 70%, rgba(109, 74, 255, 0.03) 0%, transparent 15%),
+    radial-gradient(circle at 40% 60%, rgba(109, 74, 255, 0.03) 0%, transparent 15%),
+    radial-gradient(circle at 60% 40%, rgba(109, 74, 255, 0.03) 0%, transparent 15%);
+  animation: rotateCircles 60s linear infinite;
+  z-index: 0;
+}
+
+@keyframes rotateCircles {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Numerology Container */
+.loginContainer {
+  background-color: var(--login-white);
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 420px;
+  z-index: 10;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--login-light-gray);
+}
+
+/* Numerology Number Patterns */
+.loginContainer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 50a20 20 0 1 1 0-40 20 20 0 0 1 0 40zm0 10a30 30 0 1 0 0-60 30 30 0 0 0 0 60z' fill='%236d4aff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3Ctext x='50%' y='50%' font-family='Arial' font-size='8' fill='%236d4aff' fill-opacity='0.05' text-anchor='middle' dominant-baseline='middle'%3E8%3C/text%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0V0zm10 10a5 5 0 1 1 0-10 5 5 0 0 1 0 10z' fill='%236d4aff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+  opacity: 0.5;
+  z-index: 0;
+  animation: floatPattern 30s linear infinite;
+}
+
+@keyframes floatPattern {
+  0% {
+    background-position: 0 0, 0 0;
+  }
+  100% {
+    background-position: 100px 100px, 50px 50px;
+  }
+}
+
+/* Rest of the styles */
+.loginTitle {
+  font-size: 1.8rem;
+  color: var(--login-primary-color);
+  margin-bottom: 0.5rem;
+  text-align: center;
+  font-weight: 700;
+  position: relative;
+}
+
+.loginSubtitle {
+  color: var(--login-text-color);
+  opacity: 0.7;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 0.95rem;
+  position: relative;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.loginInputGroup {
+  position: relative;
+}
+
+.loginInputGroup input {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid var(--login-light-gray);
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  padding-right: 2.5rem;
+}
+
+.loginInputGroup input:focus {
+  border-color: var(--login-primary-light);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(109, 74, 255, 0.2);
+}
+
+.loginPasswordIcons {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.loginPasswordToggle {
+  cursor: pointer;
+  user-select: none;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.loginPasswordToggle:hover {
+  opacity: 1;
+}
+
+.loginValidationIcon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.loginValidationIcon.valid {
+  color: var(--login-success-color);
+}
+
+.loginValidationIcon.invalid {
+  color: var(--login-error-color);
+}
+
+.loginOptions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.loginRememberMe {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.loginRememberMe input {
+  cursor: pointer;
+}
+
+.loginForgotPassword {
+  color: var(--login-primary-color);
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.loginForgotPassword:hover {
+  color: var(--login-secondary-color);
+  text-decoration: underline;
+}
+
+.loginButton {
+  background-color: var(--login-primary-color);
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.loginButton:hover {
+  background-color: var(--login-secondary-color);
+  transform: translateY(-2px);
+}
+
+.loginButton:active {
+  transform: translateY(0);
+}
+
+.loginFooter {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--login-text-color);
+  opacity: 0.8;
+}
+
+.loginLink {
+  color: var(--login-primary-color);
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.loginLink:hover {
+  color: var(--login-secondary-color);
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .loginContainer {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .loginTitle {
+    font-size: 1.5rem;
+  }
+}
