@@ -4,14 +4,14 @@ import styles from './UserDashboard.module.css';
 
 const UserDashboard = () => {
   const [activeTab, setActiveTab] = useState('courses');
-  const [userData, setUserData] = useState({
+  const [userData, ] = useState({
     name: 'Divine Seeker',
     email: 'seeker@sacredpath.com',
     joinDate: 'January 15, 2023',
     profileComplete: 75,
     subscription: 'Premium'
   });
-  const [enrolledCourses, setEnrolledCourses] = useState([
+  const [enrolledCourses, ] = useState([
     {
       id: 1,
       title: 'Sacred Numerology Basics',
@@ -37,7 +37,7 @@ const UserDashboard = () => {
       instructor: 'Pandit Ved'
     }
   ]);
-  const [upcomingEvents, setUpcomingEvents] = useState([
+  const [upcomingEvents, ] = useState([
     {
       id: 1,
       title: 'Full Moon Meditation',
@@ -53,12 +53,7 @@ const UserDashboard = () => {
       duration: '60 mins'
     }
   ]);
-  const [recentActivities, setRecentActivities] = useState([
-    'Completed lesson: Sacred Numbers 1-9',
-    'Posted in Numerology Forum',
-    'Booked consultation with Master Sarrika',
-    'Downloaded study materials'
-  ]);
+  
 
   const navigate = useNavigate();
 
