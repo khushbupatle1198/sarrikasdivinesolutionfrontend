@@ -1,124 +1,86 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppToggle from './WhatsAppToggle';
+import config from '../config';
 import './EReport.css';
 
 const EReportCards = () => {
+  const navigate = useNavigate();
   const [navbarScrolled, setNavbarScrolled] = useState(false);
   const [navbarVisible, setNavbarVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [eReports, setEReports] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Static report data
-  const eReports = [
-    {
-      id: 1,
-      title: "Personal Numerology Report",
-      price: "999",
-      description: "Discover your life path number and its profound meaning in your personal journey.",
-      points: [
-        "Detailed analysis of your core numbers",
-        "Life path number interpretation",
-        "Personality and hidden talents",
-        "Challenges and opportunities",
-        "Yearly numerology forecast"
-      ],
-      imageUrl: "numerology1.jpg"
-    },
-    {
-      id: 2,
-      title: "Relationship Compatibility Report",
-      price: "1299",
-      description: "Understand the numerology behind your relationships and compatibility with others.",
-      points: [
-        "Compatibility score with partner",
-        "Communication style analysis",
-        "Relationship challenges",
-        "Growth opportunities",
-        "Future relationship forecast"
-      ],
-      imageUrl: "numerology2.jpg"
-    },
-    {
-      id: 3,
-      title: "Business Numerology Report",
-      price: "1999",
-      description: "Align your business with the right numbers for success and prosperity.",
-      points: [
-        "Business name analysis",
-        "Launch date recommendations",
-        "Lucky numbers for business",
-        "Financial forecast",
-        "Best partnerships"
-      ],
-      imageUrl: "numerology3.jpg"
-    },
-    {
-      id: 4,
-      title: "Yearly Forecast Report",
-      price: "799",
-      description: "Get insights into what your personal year holds based on numerology.",
-      points: [
-        "Personal year number analysis",
-        "Monthly breakdown",
-        "Important dates to watch",
-        "Career opportunities",
-        "Health and wellness guidance"
-      ],
-      imageUrl: "numerology4.jpg"
-    },
-    {
-      id: 5,
-      title: "Name Correction Report",
-      price: "2499",
-      description: "Optimize your name's vibration to attract success and happiness.",
-      points: [
-        "Current name analysis",
-        "Vibration correction",
-        "Suggested name changes",
-        "Impact on life areas",
-        "Implementation guidance"
-      ],
-      imageUrl: "numerology5.jpg"
-    },
-    {
-      id: 6,
-      title: "Destiny & Career Report",
-      price: "1499",
-      description: "Align your career path with your soul's purpose using numerology.",
-      points: [
-        "Destiny number analysis",
-        "Ideal career paths",
-        "Work environment needs",
-        "Financial potential",
-        "Career timing"
-      ],
-      imageUrl: "numerology6.jpg"
-    }
-  ];
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > 50) {
+        setNavbarScrolled(true);
+      } else {
+        setNavbarScrolled(false);
+      }
+      
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setNavbarVisible(false);
+      } else {
+        setNavbarVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
 
-  const handleScroll = () => {
-    const currentScrollY = window.scrollY;
-    
-    if (currentScrollY > 50) {
-      setNavbarScrolled(true);
-    } else {
-      setNavbarScrolled(false);
-    }
-    
-    if (currentScrollY > lastScrollY && currentScrollY > 100) {
-      setNavbarVisible(false);
-    } else {
-      setNavbarVisible(true);
-    }
-    
-    setLastScrollY(currentScrollY);
-  };
-
-  useState(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
+
+  useEffect(() => {
+    const fetchEReports = async () => {
+      try {
+        const response = await fetch(`${config.API_BASE_URL}/api/Allereports`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch E-Reports');
+        }
+        const data = await response.json();
+        setEReports(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEReports();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="loading-screen">
+        <div className="spinner"></div>
+        <p>Loading E-Reports...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="error-screen">
+        <p>Error: {error}</p>
+      </div>
+    );
+  }
+
+  const handleGetReport = (eReport) => {
+    navigate('/ereportbooking', { 
+      state: { 
+        eReport: eReport 
+      } 
+    });
+  };
 
   return (
     <div className="cosmic-container">
@@ -150,7 +112,7 @@ const EReportCards = () => {
               <div key={report.id} className="cosmic-card">
                 <div className="card-image-container">
                   <img 
-                    src={`/images/${report.imageUrl}`} 
+                    src={`${config.API_BASE_URL}/uploads/EReportImages/${report.imageUrl}`} 
                     alt={report.title}
                     className="card-image"
                     loading="lazy"
@@ -171,13 +133,16 @@ const EReportCards = () => {
                       </li>
                     ))}
                   </ul>
-                  <button className="card-button">
-                    Get Report
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                      <path d="M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                      <path d="M12 5L19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                    </svg>
-                  </button>
+                  <button 
+  className="card-button"
+  onClick={() => handleGetReport(report)}
+>
+  Get Report
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+    <path d="M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M12 5L19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+</button>
                 </div>
               </div>
             ))}

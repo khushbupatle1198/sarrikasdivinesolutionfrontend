@@ -3,71 +3,19 @@
 @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
-/* Custom Variables */
 :root {
   --primary: #6a1b9a;
-  --primary-dark: #4a148c;
-  --primary-light: #9c4dcc;
-  --secondary: #8e24aa;
-  --accent: #ffab00;
-  --light: #f3e5f5;
-  --dark: #12005e;
-  --text: #333333;
-  --text-light: #666666;
-  --white: #ffffff;
-  --success: #25D366;
-  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --navbar-height: 70px; /* Added navbar height variable */
 }
 
-/* Base Styles */
-body {
-  font-family: 'Poppins', sans-serif;
-  color: var(--text);
-  overflow-x: hidden;
-  background-color: #f9f9f9;
-  line-height: 1.6;
-  scroll-behavior: smooth;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-  line-height: 1.2;
-}
-
-.display-3 {
-  font-size: 3.5rem;
-  letter-spacing: -1px;
-}
-
-/* Modern Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--light);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-dark);
-}
-
-/* Banner Styles */
+/* Base Banner Styles */
 .hero-banner {
-   position: relative;
+  position: relative;
   width: 100%;
-  height: 100vh; /* Full viewport height */
+  height: 100vh;
   min-height: 450px;
   overflow: hidden;
-  margin-top: 0; 
+ 
 }
 
 .banner-slide {
@@ -80,45 +28,57 @@ h1, h2, h3, h4, h5, h6 {
   background-position: center;
   background-repeat: no-repeat;
   opacity: 0;
-  transition: opacity 1s ease-in-out;
-  will-change: opacity;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  image-rendering: -webkit-optimize-contrast;
+  transition: opacity 1s ease;
 }
 
 .banner-slide.active {
   opacity: 1;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 992px) {
-  .hero-banner {
-    height: calc(80vh - var(--navbar-height, 70px)) !important;
-  }
+/* About Section */
+.about-section {
+  padding: 4rem 0;
 }
 
+/* Mobile Responsive Fixes */
 @media (max-width: 768px) {
+  /* Banner Fix - Full width, no cut, proper height */
   .hero-banner {
-    height: calc(70vh - var(--navbar-height, 70px)) !important;
-    background-position: top center;
+     height: 30vh !important;
+    min-height: 200px !important;
+    
   }
-  
+
   .banner-slide {
-    background-size: contain;
-    background-position: top center;
-    background-color: #f9f9f9; /* Fallback color */
+    background-size: cover !important;
+    background-position: center !important;
+  }
+
+  /* Reduced gap between banner and about section */
+  .about-section {
+    padding: 2rem 0 !important;
+    margin-top: 0 !important;
+  }
+
+  /* Compact about section layout */
+  .about-image {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .about-section h2 {
+    font-size: 1.8rem !important;
+    margin-bottom: 1rem !important;
   }
 }
 
 @media (max-width: 576px) {
   .hero-banner {
-    height: calc(60vh - var(--navbar-height, 60px)) !important;
+    height: 15vh !important;
+    min-height: 150px !important;
   }
-  
-  .banner-slide {
-    background-size: contain;
-    background-position: top center;
+
+  .about-section {
+    padding: 1.5rem 0 !important;
   }
 }
 
@@ -132,7 +92,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .about-image {
   position: relative;
-  border-radius: 20px;
+  border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
@@ -231,39 +191,7 @@ h1, h2, h3, h4, h5, h6 {
   color: white !important;
 }
 
-/* Testimonials */
-.testimonials-section {
-  background-color: white;
-  padding: 8rem 0;
-}
 
-.review-card {
-  background-color: #f9f5ff;
-  padding: 2.5rem;
-  border-radius: 16px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  transition: var(--transition);
-  border: 1px solid rgba(142, 36, 170, 0.1);
-  backface-visibility: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-}
-
-.review-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 25px rgba(0,0,0,0.15);
-}
-
-.review-avatar {
-  font-size: 3rem;
-  margin-bottom: 1.5rem;
-}
-
-.rating {
-  font-size: 1.2rem;
-  color: var(--accent);
-}
 
 /* CTA Section */
 .cta-section {
@@ -395,5 +323,185 @@ img {
   
   .banner-content p {
     font-size: 1rem;
+  }
+}
+
+/* Review Form Section */
+.review-form-section {
+  background-color: #f8f9fa;
+}
+
+.review-form-section .card {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.rating-input .rating-star {
+  transition: all 0.2s;
+  padding: 0.5rem;
+}
+
+.rating-input .rating-star:hover {
+  transform: scale(1.2);
+}
+
+.rating-input .text-warning {
+  color: #ffc107 !important;
+}
+
+/* Testimonials Section */
+.testimonials-section {
+  background-color: #f8f9fa;
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonials-slider-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  position: relative;
+}
+
+.testimonials-slider-track {
+  display: flex;
+  gap: 30px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding: 20px 0;
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+.testimonials-slider-track::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome/Safari */
+}
+
+.testimonial-slide {
+  scroll-snap-align: start;
+  flex: 0 0 calc(33.333% - 20px);
+  min-width: 280px;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.review-card {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  height: 100%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(106, 27, 154, 0.1);
+}
+
+.review-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+/* Navigation Buttons */
+.slider-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: white;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  color: var(--primary);
+  font-size: 1.2rem;
+}
+
+.slider-nav-btn:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.prev-btn {
+  left: 0;
+}
+
+.next-btn {
+  right: 0;
+}
+
+/* Pagination Dots */
+.slider-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 8px;
+}
+
+.slider-pagination .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(106, 27, 154, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.slider-pagination .dot.active {
+  background: var(--primary);
+  transform: scale(1.2);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .testimonial-slide {
+    flex: 0 0 calc(50% - 15px);
+  }
+}
+
+@media (max-width: 768px) {
+  .testimonials-slider-container {
+    padding: 0 30px;
+  }
+  
+  .testimonial-slide {
+    flex: 0 0 calc(100% - 10px);
+  }
+  
+  .slider-nav-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.testimonial-slide {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .review-form-section .card-body {
+    padding: 2rem;
+  }
+  
+  .rating-input .rating-star {
+    padding: 0.3rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .review-form-section .card-body {
+    padding: 1.5rem;
   }
 }

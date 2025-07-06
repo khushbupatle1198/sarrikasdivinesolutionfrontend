@@ -23,19 +23,21 @@
   margin-bottom: 1.5rem;
 }
 
-.footer-brand .logo-icon {
-  font-size: 2.5rem;
-  margin-right: 1rem;
-  background: linear-gradient(90deg, #f472b6, #f97316);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+.footer-brand .navbar-logo {
+  height: 50px;
+  margin-right: 15px;
+}
+
+.footer-brand span {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  color: white;
 }
 
 .footer-links a {
   color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
-  transition: var(--transition);
+  transition: all 0.3s ease;
 }
 
 .footer-links a:hover {
@@ -44,7 +46,7 @@
 }
 
 .social-links a {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 40px;
@@ -52,10 +54,89 @@
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.1);
   color: white;
-  transition: var(--transition);
+  transition: all 0.3s ease;
+  margin-right: 10px;
 }
 
 .social-links a:hover {
   background: linear-gradient(90deg, #f472b6, #f97316);
   transform: translateY(-3px);
+}
+
+.newsletter .form-control {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+}
+
+.newsletter .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.newsletter .btn-primary {
+  background: linear-gradient(90deg, #f472b6, #f97316);
+  border: none;
+}
+
+/* Developer Link Styles */
+.developer-link {
+  color: #fff !important;
+  text-decoration: none;
+  position: relative;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.developer-link:hover {
+  color: #f97316 !important;
+}
+
+.developer-link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: #f97316;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+
+.developer-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .footer {
+    text-align: center;
+  }
+  
+  .footer-brand {
+    justify-content: center;
+  }
+  
+  .social-links {
+    justify-content: center;
+  }
+  
+  .nav.flex-column {
+    align-items: center;
+  }
+  
+  .border-top {
+    text-align: center;
+  }
+  
+  .text-md-end {
+    text-align: center !important;
+    margin-top: 1rem;
+  }
+  
+  .nav.justify-content-md-end {
+    justify-content: center !important;
+  }
 }

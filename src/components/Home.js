@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppToggle from './WhatsAppToggle';
@@ -7,39 +7,152 @@ import config from '../config';
 import './Home.css';
 
 const Home = () => {
-  // Banner state
+  // Existing state variables
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [banners, setBanners] = useState([]);
+  const [loadingBanners, setLoadingBanners] = useState(true);
+  const [bannersError, setBannersError] = useState(null);
   const [navbarScrolled, setNavbarScrolled] = useState(false);
   const [navbarVisible, setNavbarVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [navbarHeight, setNavbarHeight] = useState(0);
-  // New state for courses
   const [courses, setCourses] = useState([]);
   const [loadingCourses, setLoadingCourses] = useState(true);
   const [coursesError, setCoursesError] = useState(null);
   
-  const banners = [
-    { 
-      image: "/1.png", 
-      
-    },
-    { 
-      image: "/2.png", 
-      
-    },
-    
-  ];
+  // New state for reviews
+  const [reviews, setReviews] = useState([]);
+  const [loadingReviews, setLoadingReviews] = useState(true);
+  const [reviewForm, setReviewForm] = useState({
+    name: '',
+    email: '',
+    rating: 0,
+    message: ''
+  });
+  const [submitStatus, setSubmitStatus] = useState({
+    loading: false,
+    success: false,
+    error: null
+  });
 
-  // Reviews data
-  const reviews = [
-    { id: 1, name: "Priya Sharma", text: "Sarrika's guidance transformed my spiritual journey completely.", rating: 5, avatar: "🙏", date: "2 weeks ago" },
-    { id: 2, name: "Rahul Verma", text: "The divine solutions provided immediate relief to my problems.", rating: 5, avatar: "😇", date: "1 month ago" },
-    { id: 3, name: "Anjali Patel", text: "The courses are life-changing with practical spiritual wisdom.", rating: 4, avatar: "🌺", date: "3 months ago" },
-    { id: 4, name: "Sanjay Gupta", text: "The energy healing session was incredibly powerful.", rating: 5, avatar: "🌟", date: "2 months ago" }
-  ];
+  const navigate = useNavigate();
+
+  // Existing functions
+  const handleRedirect = () => {
+    navigate('/consultation');
+  };
+
+  // Fetch reviews from backend
+  const fetchReviews = async () => {
+    try {
+      setLoadingReviews(true);
+      const response = await fetch(`${config.API_BASE_URL}/api/reviews`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch reviews');
+      }
+      const data = await response.json();
+      setReviews(data);
+    } catch (err) {
+      console.error('Error fetching reviews:', err);
+    } finally {
+      setLoadingReviews(false);
+    }
+  };
+
+  // Form validation
+  const validateForm = () => {
+    if (!reviewForm.name.trim()) {
+      return 'Name is required';
+    }
+    if (!reviewForm.email.trim()) {
+      return 'Email is required';
+    }
+    if (!/^\S+@\S+\.\S+$/.test(reviewForm.email)) {
+      return 'Please enter a valid email';
+    }
+    if (reviewForm.rating === 0) {
+      return 'Please select a rating';
+    }
+    if (!reviewForm.message.trim()) {
+      return 'Review message is required';
+    }
+    return null;
+  };
+
+  // Handle review submission
+  const handleReviewSubmit = async (e) => {
+    e.preventDefault();
+    
+    const validationError = validateForm();
+    if (validationError) {
+      setSubmitStatus({ 
+        loading: false, 
+        success: false, 
+        error: validationError 
+      });
+      return;
+    }
+
+    setSubmitStatus({ loading: true, success: false, error: null });
+
+    try {
+      const response = await fetch(`${config.API_BASE_URL}/api/reviews`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reviewForm),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit review');
+      }
+
+      await response.json();
+      
+      // Reset form on success
+      setReviewForm({
+        name: '',
+        email: '',
+        rating: 0,
+        message: ''
+      });
+      
+      setSubmitStatus({ loading: false, success: true, error: null });
+      
+      // Refresh the reviews list
+      fetchReviews();
+      
+    } catch (error) {
+      setSubmitStatus({ 
+        loading: false, 
+        success: false, 
+        error: error.message || 'Failed to submit review'
+      });
+    }
+  };
+
+  // Existing useEffect hooks
+  useEffect(() => {
+    const fetchBanners = async () => {
+      try {
+        const response = await fetch(`${config.API_BASE_URL}/api/banners`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch banners');
+        }
+        const data = await response.json();
+        setBanners(data);
+      } catch (err) {
+        setBannersError(err.message);
+        setBanners([]);
+      } finally {
+        setLoadingBanners(false);
+      }
+    };
+    fetchBanners();
+  }, []);
 
   useEffect(() => {
-    // Get navbar height after it's rendered
     const navbar = document.querySelector('.navbar');
     if (navbar) {
       setNavbarHeight(navbar.offsetHeight);
@@ -54,7 +167,6 @@ const Home = () => {
           throw new Error('Failed to fetch courses');
         }
         const data = await response.json();
-        // Take first 6 courses or all if less than 6
         setCourses(data.slice(0, 6));
       } catch (err) {
         setCoursesError(err.message);
@@ -62,25 +174,19 @@ const Home = () => {
         setLoadingCourses(false);
       }
     };
-
     fetchCourses();
   }, []);
 
-  // Handle scroll for navbar effect
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       
-      // Hide/show navbar
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolling down
         setNavbarVisible(false);
       } else {
-        // Scrolling up
         setNavbarVisible(true);
       }
       
-      // Navbar background change
       if (currentScrollY > 50) {
         setNavbarScrolled(true);
       } else {
@@ -94,14 +200,92 @@ const Home = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
-  // Auto-rotate banners
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev === banners.length - 1 ? 0 : prev + 1));
-    }, 5000);
-    return () => clearInterval(interval);
+    if (banners.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentSlide((prev) => (prev === banners.length - 1 ? 0 : prev + 1));
+      }, 5000);
+      return () => clearInterval(interval);
+    }
   }, [banners.length]);
 
+  // Fetch reviews on component mount
+  useEffect(() => {
+    fetchReviews();
+  }, []);
+
+useEffect(() => {
+  if (reviews.length === 0) return;
+
+  const sliderTrack = document.querySelector('.testimonials-slider-track');
+  const slides = document.querySelectorAll('.testimonial-slide');
+  const prevBtn = document.querySelector('.prev-btn');
+  const nextBtn = document.querySelector('.next-btn');
+
+  
+  let currentIndex = 0;
+  const slideWidth = slides[0].offsetWidth + 30; // Include gap
+  
+  // Create pagination dots
+  const paginationContainer = document.querySelector('.slider-pagination');
+  if (paginationContainer) {
+    paginationContainer.innerHTML = '';
+    slides.forEach((_, index) => {
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      if (index === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => goToSlide(index));
+      paginationContainer.appendChild(dot);
+    });
+  }
+  
+  // Update active dot
+  const updatePagination = (index) => {
+    document.querySelectorAll('.slider-pagination .dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
+  };
+  
+  // Go to specific slide
+  const goToSlide = (index) => {
+    currentIndex = index;
+    sliderTrack.scrollTo({
+      left: index * slideWidth,
+      behavior: 'smooth'
+    });
+    updatePagination(index);
+  };
+  
+  // Next slide
+  const nextSlide = () => {
+    currentIndex = (currentIndex + 1) % slides.length;
+    goToSlide(currentIndex);
+  };
+  
+  // Previous slide
+  const prevSlide = () => {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    goToSlide(currentIndex);
+  };
+  
+  // Auto slide
+  let autoSlide = setInterval(nextSlide, 5000);
+  
+  
+  // Event listeners
+  if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+  if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+  
+  // Pause on hover
+  sliderTrack.addEventListener('mouseenter', () => clearInterval(autoSlide));
+  sliderTrack.addEventListener('mouseleave', () => autoSlide = setInterval(nextSlide, 5000));
+  
+  return () => {
+    clearInterval(autoSlide);
+    if (nextBtn) nextBtn.removeEventListener('click', nextSlide);
+    if (prevBtn) prevBtn.removeEventListener('click', prevSlide);
+  };
+}, [reviews]);
   
   return (
     <div className="home-page">
@@ -109,22 +293,76 @@ const Home = () => {
       
       {/* Optimized Banner Section */}
       
-      <div 
-        className="hero-banner" 
-        style={{ 
-          marginTop: `${navbarHeight}px`,
-          height: `calc(50vh - ${navbarHeight}px)`
-        }}
-      >
-        {banners.map((banner, index) => (
-          <div 
-            key={index}
-            className={`banner-slide ${index === currentSlide ? 'active' : ''}`}
-            style={{ backgroundImage: `url(${banner.image})` }}
-            aria-hidden={index !== currentSlide}
-          />
-        ))}
-      </div>
+      {loadingBanners ? (
+        <div 
+          className="banner-loading" 
+          style={{ 
+            marginTop: `${navbarHeight}px`,
+            height: `calc(50vh - ${navbarHeight}px)`,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#f8f9fa'
+          }}
+        >
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading banners...</span>
+          </div>
+        </div>
+      ) : bannersError ? (
+        <div 
+          className="banner-error" 
+          style={{ 
+            marginTop: `${navbarHeight}px`,
+            height: `calc(50vh - ${navbarHeight}px)`,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#f8f9fa'
+          }}
+        >
+          <div className="alert alert-warning">
+            Could not load banners: {bannersError}
+          </div>
+        </div>
+      ) : banners.length > 0 ? (
+        <div 
+          className="hero-banner" 
+          style={{ 
+            marginTop: `${navbarHeight}px`,
+            height: `calc(50vh - ${navbarHeight}px)`
+          }}
+        >
+          {banners.map((banner, index) => (
+            <div 
+              key={banner.id || index}
+              className={`banner-slide ${index === currentSlide ? 'active' : ''}`}
+              style={{ 
+                backgroundImage: `url(${
+                  banner.imageUrl 
+                    ? `${config.API_BASE_URL}/uploads/BannerImages/${banner.imageUrl}`
+                    : banner.image
+                })` 
+              }}
+              aria-hidden={index !== currentSlide}
+            />
+          ))}
+        </div>
+      ) : (
+        <div 
+          className="no-banners" 
+          style={{ 
+            marginTop: `${navbarHeight}px`,
+            height: `calc(50vh - ${navbarHeight}px)`,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#f8f9fa'
+          }}
+        >
+          <div className="alert alert-info">No banners available</div>
+        </div>
+      )}
 
       {/* About Section */}
       <section className="about-section py-7">
@@ -133,7 +371,7 @@ const Home = () => {
             <div className="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right">
               <div className="about-image position-relative">
                 <img 
-                  src="/divine-about.jpg" 
+                  src="/Sarrikas.jpg" 
                   alt="About Sarrika's Divine Solution" 
                   className="img-fluid rounded-4 shadow-lg"
                 />
@@ -151,10 +389,8 @@ const Home = () => {
                   About Sarrika's Divine Solution
                 </h2>
                 <p className="lead mb-4">
-                  Sarrika's Divine Solution is a sacred space where ancient spiritual wisdom meets modern 
-                  life challenges. Our divine solutions are rooted in 5000 years of Vedic knowledge, 
-                  tailored to bring peace, prosperity, and enlightenment to your life.
-                </p>
+  At Sarrika's Divine Solution, we blend 5000 years of Vedic wisdom with practical spiritual tools - from <strong>Kundli Analysis</strong> and <strong>Vedic Numerology</strong> to <strong>Tarot Readings</strong> and <strong>Crystal Healing</strong>. Our unique services like <strong>Lo Shu Grid</strong> applications and <strong>Switch Words</strong> therapy offer tailored paths to enlightenment, while our <strong>Remedies Expertise</strong> provides gemstone/mantra solutions for modern life challenges.
+</p>
                 <div className="row g-4">
                   <div className="col-md-4">
                     <div className="stat-card text-center p-3 rounded-3 shadow-sm">
@@ -178,10 +414,7 @@ const Home = () => {
                     </div>
                   </div>
                 </div>
-                <div className="mt-5">
-                  <button className="btn btn-outline-primary btn-lg me-3">Learn More</button>
-                  <button className="btn btn-primary btn-lg">Watch Video</button>
-                </div>
+                
               </div>
             </div>
           </div>
@@ -258,40 +491,71 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="testimonials-section py-7">
-        <div className="container">
-          <div className="text-center mb-6" data-aos="fade-up">
-            <h2 className="display-5 fw-bold mb-3">
-              <span className="text-primary me-3">🌟</span>
-              Divine Experiences
-            </h2>
-            <p className="lead text-muted mx-auto" style={{maxWidth: "600px"}}>
-              What seekers say about their spiritual transformation
-            </p>
-          </div>
-          
-          <div className="row g-4">
-            {reviews.map((review, index) => (
-              <div key={review.id} className="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay={index * 100}>
-                <div className="review-card h-100">
-                  <div className="review-avatar display-4 mb-3">{review.avatar}</div>
-                  <div className="rating mb-3 text-warning">
+      
+      {/* Updated Testimonials Section */}
+<section className="testimonials-section py-7">
+  <div className="container">
+    <div className="text-center mb-6" data-aos="fade-up">
+      <h2 className="display-5 fw-bold mb-3">
+        <span className="text-primary me-3">🌟</span>
+        Divine Experiences
+      </h2>
+      <p className="lead text-muted mx-auto" style={{maxWidth: "600px"}}>
+        What seekers say about their spiritual transformation
+      </p>
+    </div>
+    
+    {loadingReviews ? (
+      <div className="text-center py-5">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    ) : reviews.length === 0 ? (
+      <div className="text-center py-5">
+        <p>No reviews yet. Be the first to share your experience!</p>
+      </div>
+    ) : (
+      <div className="testimonials-slider-container position-relative">
+        <div className="testimonials-slider-track">
+          {reviews.map((review) => (
+            <div key={review.id} className="testimonial-slide">
+              <div className="review-card h-100 p-4 bg-white rounded-4 shadow-sm">
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <div className="review-author">
+                    <h5 className="mb-1 fw-bold">{review.name}</h5>
+                    <small className="text-muted">
+                      {new Date(review.createdAt).toLocaleDateString('en-US', {
+                        year: 'numeric', 
+                        month: 'short', 
+                        day: 'numeric'
+                      })}
+                    </small>
+                  </div>
+                  <div className="rating text-warning">
                     {'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}
                   </div>
-                  <blockquote className="mb-4">
-                    <p className="mb-0">"{review.text}"</p>
-                  </blockquote>
-                  <div className="review-author mt-auto">
-                    <h5 className="mb-1">{review.name}</h5>
-                    <small className="text-muted">{review.date}</small>
-                  </div>
                 </div>
+                <p className="mb-0 fst-italic">"{review.message}"</p>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-      </section>
+        
+        {/* Navigation Buttons */}
+        <button className="slider-nav-btn prev-btn" aria-label="Previous testimonial">
+          <i className="bi bi-chevron-left"></i>
+        </button>
+        <button className="slider-nav-btn next-btn" aria-label="Next testimonial">
+          <i className="bi bi-chevron-right"></i>
+        </button>
+        
+        {/* Pagination Dots */}
+        <div className="slider-pagination"></div>
+      </div>
+    )}
+  </div>
+</section>
 
       {/* CTA Section */}
       <section className="cta-section py-7 bg-dark text-white">
@@ -304,8 +568,133 @@ const Home = () => {
               </p>
             </div>
             <div className="col-lg-4 text-lg-end" data-aos="fade-left">
-              <button className="btn btn-light btn-lg px-5 py-3 me-3">Book Now</button>
-              <button className="btn btn-outline-light btn-lg px-5 py-3">Learn More</button>
+             <button 
+      className="btn btn-light btn-lg px-5 py-3 me-3"
+      onClick={handleRedirect}
+    >
+      Book Now
+    </button>
+              
+            </div>
+          </div>
+        </div>
+      </section>
+
+            {/* Review Form Section */}
+      <section className="review-form-section py-5 bg-light">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-8">
+              <div className="text-center mb-5">
+                <h2 className="display-5 fw-bold mb-3">
+                  <span className="text-primary me-2">✍️</span>
+                  Share Your Experience
+                </h2>
+                <p className="lead text-muted">
+                  We value your feedback about your spiritual journey with us
+                </p>
+              </div>
+              
+              <div className="card border-0 shadow-lg">
+                <div className="card-body p-5">
+                  <form onSubmit={handleReviewSubmit}>
+                    <div className="row g-3">
+                      <div className="col-md-6">
+                        <div className="form-floating">
+                          <input 
+                            type="text" 
+                            className="form-control" 
+                            id="name" 
+                            placeholder="Your Name"
+                            value={reviewForm.name}
+                            onChange={(e) => setReviewForm({...reviewForm, name: e.target.value})}
+                            required
+                          />
+                          <label htmlFor="name">Your Name</label>
+                        </div>
+                      </div>
+                      
+                      <div className="col-md-6">
+                        <div className="form-floating">
+                          <input 
+                            type="email" 
+                            className="form-control" 
+                            id="email" 
+                            placeholder="Email Address"
+                            value={reviewForm.email}
+                            onChange={(e) => setReviewForm({...reviewForm, email: e.target.value})}
+                            required
+                          />
+                          <label htmlFor="email">Email Address</label>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="my-4">
+                      <label className="form-label mb-3">Your Rating</label>
+                      <div className="rating-input d-flex justify-content-center">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <button
+                            key={star}
+                            type="button"
+                            className={`rating-star btn btn-link ${star <= reviewForm.rating ? 'text-warning' : 'text-muted'}`}
+                            onClick={() => setReviewForm({...reviewForm, rating: star})}
+                          >
+                            <i className="bi bi-star-fill fs-2"></i>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="mb-4">
+                      <div className="form-floating">
+                        <textarea 
+                          className="form-control" 
+                          id="message" 
+                          placeholder="Your Experience"
+                          style={{height: '120px'}}
+                          value={reviewForm.message}
+                          onChange={(e) => setReviewForm({...reviewForm, message: e.target.value})}
+                          required
+                        ></textarea>
+                        <label htmlFor="message">Your Experience</label>
+                      </div>
+                    </div>
+                    
+                    <div className="d-grid">
+                      <button 
+                        type="submit" 
+                        className="btn btn-primary btn-lg py-3"
+                        disabled={submitStatus.loading}
+                      >
+                        {submitStatus.loading ? (
+                          <>
+                            <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                            Submitting...
+                          </>
+                        ) : (
+                          <>
+                            <i className="bi bi-send-fill me-2"></i> Submit Review
+                          </>
+                        )}
+                      </button>
+                    </div>
+
+                    {/* Status messages */}
+                    {submitStatus.success && (
+                      <div className="alert alert-success mt-3 mb-0">
+                        Thank you for your review!
+                      </div>
+                    )}
+                    
+                    {submitStatus.error && (
+                      <div className="alert alert-danger mt-3 mb-0">
+                        {submitStatus.error}
+                      </div>
+                    )}
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -326,7 +715,7 @@ const Home = () => {
           
           <div className="ratio ratio-16x9 rounded-4 overflow-hidden shadow-lg" data-aos="fade-up">
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.869174899922!2d77.20990531508158!3d28.57088898244072!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce2a99b6f9fa7%3A0x83a25e55f0af4c82!2sAIIMS%20Delhi!5e0!3m2!1sen!2sin!4v1624458166788!5m2!1sen!2sin" 
+               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.701418818602!2d79.1495451!3d21.1244668!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4b978d7046635%3A0x9ff7f6cb78764aad!2sSarika%20Shrirao!5e0!3m2!1sen!2sin!4v1750582133980!5m2!1sen!2sin" 
               allowFullScreen="" 
               loading="lazy"
               title="Sacred Space Location"

@@ -1,87 +1,84 @@
-/* User Dashboard Styles */
 .dashboard {
-  font-family: 'Poppins', sans-serif;
-  color: #333;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+  background-color: #f5f7fa;
 }
 
 .header {
-  background: linear-gradient(135deg, #6a1b9a, #8e24aa);
+  background-color: #6c5ce7;
   color: white;
-  padding: 2rem 0;
-  text-align: center;
-}
-
-.headerTitle {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+  padding: 1.5rem 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .container {
-  display: flex;
-  max-width: 1400px;
+  width: 90%;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .sidebar {
-  width: 300px;
+  width: 250px;
   background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
   padding: 1.5rem;
-  margin-right: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+.mainContent {
+  flex: 1;
+  margin-left: 2rem;
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
 }
 
 .profile {
   text-align: center;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid #eee;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .avatar {
   width: 100px;
   height: 100px;
-  background: #f3e5f5;
+  border-radius: 50%;
+  background: #f0f2f5;
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar span {
+  font-size: 3rem;
+}
+
+.uploadLabel {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #6c5ce7;
+  color: white;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 1rem;
-  font-size: 2.5rem;
-}
-
-.profileCompletion {
-  margin: 1rem 0;
-}
-
-.progressBar {
-  height: 8px;
-  background: #f0f0f0;
-  border-radius: 4px;
-  margin-bottom: 0.5rem;
-}
-
-.progressFill {
-  height: 100%;
-  background: linear-gradient(90deg, #6a1b9a, #8e24aa);
-  border-radius: 4px;
-}
-
-.editProfileButton {
-  background: #6a1b9a;
-  color: white;
-  border: none;
-  padding: 0.5rem 1.5rem;
-  border-radius: 50px;
   cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.editProfileButton:hover {
-  background: #8e24aa;
 }
 
 .nav {
@@ -90,67 +87,61 @@
 }
 
 .navItem {
-  background: none;
+  padding: 0.75rem 1rem;
+  margin: 0.25rem 0;
+  border-radius: 5px;
   border: none;
+  background: none;
   text-align: left;
-  padding: 0.8rem 1rem;
-  margin: 0.2rem 0;
-  border-radius: 8px;
+  color: #555;
   cursor: pointer;
   display: flex;
   align-items: center;
-  color: #555;
-  transition: all 0.3s ease;
+  transition: all 0.2s;
 }
 
-.navIcon {
-  margin-right: 0.8rem;
-  font-size: 1.1rem;
+.navItem i {
+  margin-right: 0.5rem;
 }
 
-.navItem:hover, .navItemActive {
-  background: #f3e5f5;
-  color: #6a1b9a;
+.navItem:hover {
+  background: #f0f2f5;
+}
+
+.navItemActive {
+  background: #6c5ce7;
+  color: white;
 }
 
 .logoutButton {
-  color: #ff4757;
   margin-top: 1rem;
+  color: #ff4757;
 }
 
 .logoutButton:hover {
-  background: #ffebee;
-}
-
-.mainContent {
-  flex: 1;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-  padding: 2rem;
+  background: rgba(255, 71, 87, 0.1);
 }
 
 .courseGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
   margin-top: 1.5rem;
 }
 
 .courseCard {
-  border: 1px solid #eee;
-  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: transform 0.2s;
 }
 
 .courseCard:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .courseThumbnail {
-  position: relative;
   height: 180px;
   overflow: hidden;
 }
@@ -161,128 +152,69 @@
   object-fit: cover;
 }
 
-.progressIndicator {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 6px;
-  background: rgba(255,255,255,0.3);
-}
-
-.progressIndicator .progressBar {
-  height: 100%;
-  background: #6a1b9a;
-  border-radius: 0;
-}
-
 .courseDetails {
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
-.courseTitle {
-  margin: 0 0 0.5rem;
-  font-size: 1.2rem;
-}
-
-.instructor {
-  color: #666;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-}
-
-.progressText {
-  font-weight: 500;
+.price {
+  color: #6c5ce7;
+  font-weight: bold;
   margin: 0.5rem 0;
 }
 
-.lastAccessed {
-  color: #888;
-  font-size: 0.85rem;
-  margin: 0.5rem 0 1rem;
-}
-
 .continueButton {
-  background: #6a1b9a;
+  background: #6c5ce7;
   color: white;
   border: none;
-  padding: 0.5rem 1.5rem;
-  border-radius: 50px;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
   cursor: pointer;
-  transition: all 0.3s ease;
   width: 100%;
+  margin-top: 0.5rem;
 }
 
 .continueButton:hover {
-  background: #8e24aa;
+  background: #5649c0;
 }
 
-/* Events Section */
-.eventsList {
+.pendingList {
   margin-top: 1.5rem;
 }
 
-.eventCard {
+.pendingCard {
   display: flex;
-  border: 1px solid #eee;
-  border-radius: 10px;
-  padding: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.eventDate {
-  background: #f3e5f5;
+  border: 1px solid #e0e0e0;
   border-radius: 8px;
-  padding: 0.8rem;
-  text-align: center;
-  margin-right: 1.5rem;
-  min-width: 60px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  align-items: center;
 }
 
-.date {
-  font-size: 1.5rem;
+.pendingThumbnail {
+  width: 80px;
+  height: 80px;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-right: 1rem;
+}
+
+.pendingThumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pendingStatus {
+  color: #f39c12;
   font-weight: bold;
-  color: #6a1b9a;
 }
 
-.month {
-  font-size: 0.9rem;
-  color: #8e24aa;
-}
-
-.eventActions {
-  display: flex;
-  gap: 0.8rem;
-  margin-top: 1rem;
-}
-
-.addCalendarButton, .joinButton {
-  padding: 0.5rem 1rem;
-  border-radius: 50px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.addCalendarButton {
-  background: #f3e5f5;
-  color: #6a1b9a;
-  border: 1px solid #d1c4e9;
-}
-
-.joinButton {
-  background: #6a1b9a;
-  color: white;
-  border: none;
-}
-
-/* Profile Section */
 .profileForm {
   margin-top: 1.5rem;
 }
 
 .formGroup {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .formGroup label {
@@ -293,217 +225,387 @@
 
 .formGroup input {
   width: 100%;
-  padding: 0.8rem;
+  padding: 0.75rem;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 5px;
   font-size: 1rem;
-}
-
-.interestsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.8rem;
-  margin-top: 0.5rem;
-}
-
-.interestOption {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem;
-  border-radius: 8px;
-  background: #f9f9f9;
 }
 
 .saveButton {
-  background: #6a1b9a;
+  background: #6c5ce7;
   color: white;
   border: none;
-  padding: 0.8rem 2rem;
-  border-radius: 50px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
   cursor: pointer;
-  transition: all 0.3s ease;
   font-size: 1rem;
+  margin-top: 1rem;
 }
 
-/* Consultations Section */
-.consultationStatus {
-  display: flex;
-  gap: 1rem;
-  margin: 1.5rem 0;
+.saveButton:hover {
+  background: #5649c0;
 }
 
-.statusCard {
-  flex: 1;
-  padding: 1.5rem;
-  border-radius: 10px;
+.saveButton:disabled {
+  background: #b2b2b2;
+  cursor: not-allowed;
+}
+
+.loading {
   text-align: center;
+  padding: 2rem;
+  color: #666;
 }
 
-.statusCard h4 {
-  margin-top: 0;
-  font-size: 1rem;
+.noCourses, .noPending {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
 }
 
-.statusCard .count {
-  font-size: 2rem;
-  font-weight: bold;
-  margin: 0.5rem 0;
+/* Add these styles to your existing CSS file */
+
+.videoPlayerContainer {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.upcoming {
-  background: #e3f2fd;
-  color: #1976d2;
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background-color: #000;
 }
 
-.completed {
-  background: #e8f5e9;
-  color: #388e3c;
+.videoWrapper video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.requested {
-  background: #fff3e0;
-  color: #ffa000;
+.backButton {
+  background-color: #6c5ce7;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
 }
 
-.consultationCard {
-  border: 1px solid #eee;
-  border-radius: 10px;
-  padding: 1.5rem;
-  margin-bottom: 1rem;
+.backButton:hover {
+  background-color: #5649c0;
 }
 
-.expert {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
+.videosSection {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.expertAvatar {
-  width: 50px;
-  height: 50px;
-  background: #f3e5f5;
-  border-radius: 50%;
+.videoList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.videoItem {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.videoItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.videoThumbnail {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  background-color: #ddd;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 1rem;
-  font-size: 1.5rem;
 }
 
-.bookNewButton {
-  background: #6a1b9a;
-  color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 50px;
+.videoThumbnail i {
+  font-size: 48px;
+  color: rgba(0,0,0,0.5);
+}
+
+.videoInfo {
+  padding: 15px;
+}
+
+.videoInfo h4 {
+  margin: 0;
+  color: #333;
+}
+
+.noVideos {
+  text-align: center;
+  color: #666;
+  margin-top: 40px;
+}
+
+/* Pending Courses Section */
+.pendingSection {
+  padding: 20px;
+}
+
+.pendingList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.pendingCard {
+  display: flex;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.pendingCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pendingThumbnail {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+}
+
+.pendingThumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pendingDetails {
+  flex: 1;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pendingDetails h4 {
+  margin: 0;
+  color: #333;
+}
+
+.approvedStatus {
+  color: #28a745;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.waitingStatus {
+  color: #ffc107;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.pendingStatus {
+  color: #dc3545;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.proofLink {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.proofLink:hover {
+  text-decoration: underline;
+}
+
+.noPending {
+  text-align: center;
+  color: #666;
+  margin-top: 20px;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    width: 95%;
+  }
+
+  .sidebar {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .mainContent {
+    margin-left: 0;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .courseGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .pendingCard {
+    flex-direction: column;
+  }
+
+  .pendingThumbnail {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+  }
+
+  .videoList {
+    grid-template-columns: 1fr;
+  }
+
+  .videoPlayerContainer {
+    padding: 10px;
+  }
+
+  .videoHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .backButton {
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .videoControls {
+    padding: 8px;
+  }
+
+  .timeDisplay {
+    font-size: 12px;
+  }
+}
+
+/* Video Player Styles */
+.videoWrapper {
+  position: relative;
+  width: 100%;
+  background-color: #000;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.videoElement {
+  width: 100%;
+  display: block;
   cursor: pointer;
-  transition: all 0.3s ease;
+}
+
+.videoControls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
+  gap: 10px;
+  transition: opacity 0.3s;
 }
 
-/* Settings Section */
-.settingsTabs {
-  display: flex;
-  gap: 0.5rem;
-  margin: 1.5rem 0;
+.videoWrapper:hover .videoControls {
+  opacity: 1;
 }
 
-.settingsTab {
-  padding: 0.8rem 1.5rem;
+.playButton {
   background: none;
   border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.settingsTabActive {
-  background: #6a1b9a;
   color: white;
-}
-
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-  margin-right: 1rem;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
+  font-size: 20px;
   cursor: pointer;
+  padding: 0 10px;
+}
+
+.progressBar {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+}
+
+.progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #6c5ce7;
+  border-radius: 3px;
+}
+
+.timeDisplay {
+  color: white;
+  font-size: 14px;
+  min-width: 100px;
+  text-align: center;
+}
+
+.fullscreenButton {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+/* Video Thumbnail Preview */
+.videoThumbnail {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  background-color: #000;
+}
+
+.videoThumbnail i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+  color: rgba(255, 255, 255, 0.7);
+  z-index: 1;
+}
+
+.videoThumbnail::before {
+  content: '';
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
-  transition: .4s;
-  border-radius: 34px;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 0;
 }
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  transition: .4s;
-  border-radius: 50%;
-}
-
-input:checked + .slider {
-  background-color: #6a1b9a;
-}
-
-input:checked + .slider:before {
-  transform: translateX(26px);
-}
-
-.hint {
-  font-size: 0.85rem;
-  color: #666;
-  margin-top: 0.5rem;
-}
-
-/* Responsive Design */
-@media (max-width: 992px) {
-  .container {
-    flex-direction: column;
-  }
-  
-  .sidebar {
-    width: 100%;
-    margin-right: 0;
-    margin-bottom: 2rem;
-  }
-}
-
-@media (max-width: 576px) {
-  .courseGrid {
-    grid-template-columns: 1fr;
-  }
-  
-  .headerTitle {
-    font-size: 2rem;
-  }
-
-  .interestsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .consultationStatus {
-    flex-direction: column;
-  }
+.videoItem:hover .videoThumbnail i {
+  color: white;
+  transform: translate(-50%, -50%) scale(1.1);
 }

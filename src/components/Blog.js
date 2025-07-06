@@ -3,12 +3,38 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppToggle from './WhatsAppToggle';
 import './Blog.css';
+import config from '../config';
 
 const Blog = () => {
   const [navbarScrolled, setNavbarScrolled] = useState(false);
   const [navbarVisible, setNavbarVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [activeCategory, setActiveCategory] = useState('all');
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [blogPosts, setBlogPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch blogs from backend
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await fetch(`${config.API_BASE_URL}/api/blogs`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch blogs');
+        }
+        const data = await response.json();
+        setBlogPosts(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,66 +67,29 @@ const Blog = () => {
     { id: 'energy', name: 'Energy Healing' }
   ];
 
-  const blogPosts = [
-    {
-      id: 1,
-      title: 'The Power of Your Life Path Number',
-      excerpt: 'Discover how your core number influences your life journey and purpose...',
-      category: 'numerology',
-      date: 'May 15, 2023',
-      readTime: '5 min read',
-      image: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
-    },
-    {
-      id: 2,
-      title: 'Master Numbers 11, 22, and 33 Explained',
-      excerpt: 'Understanding the significance and challenges of these powerful numbers...',
-      category: 'numerology',
-      date: 'April 28, 2023',
-      readTime: '7 min read',
-      image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
-    },
-    {
-      id: 3,
-      title: 'Morning Meditation for Numerological Alignment',
-      excerpt: 'A guided practice to harmonize with your personal numbers each day...',
-      category: 'meditation',
-      date: 'April 10, 2023',
-      readTime: '4 min read',
-      image: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
-    },
-    {
-      id: 4,
-      title: 'Numerology and Chakras: The Number-Energy Connection',
-      excerpt: 'How your core numbers relate to your body\'s energy centers...',
-      category: 'energy',
-      date: 'March 22, 2023',
-      readTime: '6 min read',
-      image: 'https://images.unsplash.com/photo-1518655048521-f130df041f66?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
-    },
-    {
-      id: 5,
-      title: 'The Spiritual Significance of Repeating Numbers',
-      excerpt: 'Why you keep seeing 11:11, 333, and other number sequences...',
-      category: 'spirituality',
-      date: 'March 5, 2023',
-      readTime: '8 min read',
-      image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
-    },
-    {
-      id: 6,
-      title: 'Calculating Your Personal Year Number',
-      excerpt: 'How to determine and work with your current yearly vibration...',
-      category: 'numerology',
-      date: 'February 18, 2023',
-      readTime: '5 min read',
-      image: 'https://images.unsplash.com/photo-1517971053567-8bde93bc6a58?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
-    }
-  ];
-
   const filteredPosts = activeCategory === 'all' 
     ? blogPosts 
     : blogPosts.filter(post => post.category === activeCategory);
+
+  const handleReadMore = (post) => {
+    setSelectedPost(post);
+    setShowModal(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setSelectedPost(null);
+    document.body.style.overflow = 'auto';
+  };
+
+  if (loading) {
+    return <div className="loading-spinner">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="error-message">Error: {error}</div>;
+  }
 
   return (
     <div className="blog-container">
@@ -137,69 +126,89 @@ const Blog = () => {
         <section className="blog-posts py-5">
           <div className="container">
             <div className="row g-4">
-              {filteredPosts.map(post => (
-                <div key={post.id} className="col-md-6 col-lg-4">
-                  <div className="blog-card">
-                    <div className="blog-image">
-                      <img src={post.image} alt={post.title} />
-                      <span className="category-badge">{post.category}</span>
-                    </div>
-                    <div className="blog-content">
-                      <div className="blog-meta">
-                        <span className="date">{post.date}</span>
-                        <span className="read-time">{post.readTime}</span>
+              {filteredPosts.length > 0 ? (
+                filteredPosts.map(post => (
+                  <div key={post.id} className="col-md-6 col-lg-4">
+                    <div className="blog-card">
+                      <div className="blog-image">
+                        <img 
+                          src={post.imageUrl 
+                            ? `${config.API_BASE_URL}/uploads/BlogImages/${post.imageUrl}` 
+                            : 'https://via.placeholder.com/500x300'} 
+                          alt={post.title} 
+                        />
+                        <span className="category-badge">{post.category}</span>
                       </div>
-                      <h3>{post.title}</h3>
-                      <p>{post.excerpt}</p>
-                      <button className="btn btn-read-more">Read More</button>
+                      <div className="blog-content">
+                        <div className="blog-meta">
+                          <span className="date">
+                            {new Date(post.date).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric'
+                            })}
+                          </span>
+                        </div>
+                        <h3>{post.title}</h3>
+                        <p>{post.excerpt || post.content.substring(0, 100) + '...'}</p>
+                        <button 
+                          className="btn btn-read-more"
+                          onClick={() => handleReadMore(post)}
+                        >
+                          Read More
+                        </button>
+                      </div>
                     </div>
                   </div>
+                ))
+              ) : (
+                <div className="col-12 text-center">
+                  <p>No blog posts found in this category.</p>
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </section>
 
-        <section className="featured-post py-5 bg-light">
-          <div className="container">
-            <div className="row align-items-center">
-              <div className="col-lg-6 mb-4 mb-lg-0">
-                <div className="featured-image">
-                  <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Featured Post" />
+        {showModal && selectedPost && (
+          <div className="blog-modal-overlay">
+            <div className="blog-modal">
+              <div className="blog-modal-header">
+                <h3>{selectedPost.title}</h3>
+                <button onClick={closeModal} className="close-modal-btn">
+                  &times;
+                </button>
+              </div>
+              <div className="blog-modal-body">
+                <div className="blog-modal-meta">
+                  <span className="author">By {selectedPost.author}</span>
+                  <span className="date">
+                    {new Date(selectedPost.date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </span>
+                </div>
+                {selectedPost.imageUrl && (
+                  <img 
+                    src={`${config.API_BASE_URL}/uploads/BlogImages/${selectedPost.imageUrl}`} 
+                    alt={selectedPost.title} 
+                    className="blog-modal-image"
+                  />
+                )}
+                <div className="blog-modal-content">
+                  {selectedPost.content}
                 </div>
               </div>
-              <div className="col-lg-6">
-                <div className="featured-content">
-                  <span className="featured-badge">Featured Post</span>
-                  <h2>The Numerology of 2024: A Universal 8 Year</h2>
-                  <p className="featured-excerpt">
-                    Discover what the universal year number 8 means for global energy and how it will affect your personal numerology chart in this comprehensive guide to the coming year's vibrations.
-                  </p>
-                  <div className="featured-meta">
-                    <span className="date">June 1, 2023</span>
-                    <span className="read-time">10 min read</span>
-                  </div>
-                  <button className="btn btn-featured">Read Full Article</button>
-                </div>
+              <div className="blog-modal-footer">
+                <button onClick={closeModal} className="btn btn-close-modal">
+                  Close
+                </button>
               </div>
             </div>
           </div>
-        </section>
-
-        <section className="newsletter py-5">
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-lg-8 text-center">
-                <h2>Get Spiritual Insights Delivered</h2>
-                <p className="mb-4">Subscribe to receive our latest numerology articles and spiritual guidance</p>
-                <form className="newsletter-form">
-                  <input type="email" placeholder="Your email address" />
-                  <button type="submit" className="btn btn-subscribe">Subscribe</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </section>
+        )}
       </div>
 
       <Footer />

@@ -1,5 +1,5 @@
 import React from 'react';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Footer.css';
 
 const Footer = () => {
@@ -66,44 +66,43 @@ const Footer = () => {
                   Blog
                 </button>
               </li>
-              <li className="nav-item mb-2">
-                <button onClick={() => handleNavigate('/userdashboard')} className="nav-link p-0 text-white-50 bg-transparent border-0 text-start">
-                  User Dash
-                </button>
-              </li>
-               <li className="nav-item mb-2">
-                <button onClick={() => handleNavigate('/admindash')} className="nav-link p-0 text-white-50 bg-transparent border-0 text-start">
-                  Admin Dash
+            <li className="nav-item mb-2">
+                <button onClick={() => handleNavigate('/contact')} className="nav-link p-0 text-white-50 bg-transparent border-0 text-start">
+                  Contact
                 </button>
               </li>
             </ul>
           </div>
           
           <div className="col-lg-3 col-md-4">
-            <h5 className="mb-4">Contact Us</h5>
-            <ul className="nav flex-column">
-              <li className="nav-item mb-2">
-                <a href="mailto:divine@sarrikasolutions.com" className="nav-link p-0 text-white-50">
-                  <i className="bi bi-envelope me-2"></i> divine@sarrikasolutions.com
-                </a>
-              </li>
-              <li className="nav-item mb-2">
-                <a href="tel:+919067690333" className="nav-link p-0 text-white-50">
-                  <i className="bi bi-telephone me-2"></i> +91 90676 90333
-                </a>
-              </li>
-              <li className="nav-item mb-2">
-                <a 
-                  href="https://maps.google.com?q=108 Divine Lane, Rishikesh, India" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="nav-link p-0 text-white-50"
-                >
-                  <i className="bi bi-geo-alt me-2"></i> 108 Divine Lane, Rishikesh, India
-                </a>
-              </li>
-            </ul>
-          </div>
+  <h5 className="mb-4">Contact Us</h5>
+  <ul className="nav flex-column">
+    <li className="nav-item mb-2">
+      <a href="mailto:sarika.shrirao@gmail.com" className="nav-link p-0 text-white-50">
+        <i className="bi bi-envelope me-2"></i> sarika.shrirao@gmail.com
+      </a>
+    </li>
+    <li className="nav-item mb-2">
+      <a href="tel:+919067690333" className="nav-link p-0 text-white-50">
+        <i className="bi bi-telephone me-2"></i> +91 90676 90333
+      </a>
+    </li>
+    <li className="nav-item mb-2">
+      <a 
+        href="https://maps.google.com?q=37, Sarika Shrirao's The Grooming Station Academy, Near Jay Jalaram Nagar Society, Near Mata Mandir, Wathoda Layout, Nagpur, Maharashtra 440008" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className="nav-link p-0 text-white-50"
+      >
+        <i className="bi bi-geo-alt me-2"></i> 
+        37, Sarika Shrirao's The Grooming Station Academy,<br />
+        Near Jay Jalaram Nagar Society,<br />
+        Near Mata Mandir, Wathoda Layout,<br />
+        Nagpur, Maharashtra 440008
+      </a>
+    </li>
+  </ul>
+</div>
           
           <div className="col-lg-3 col-md-4">
             <h5 className="mb-4">Opening Hours</h5>
@@ -121,6 +120,16 @@ const Footer = () => {
             <div className="col-md-6 mb-3 mb-md-0">
               <p className="mb-0 text-white-50">
                 &copy; {new Date().getFullYear()} Sarrika's Divine Solution. All Rights Reserved.
+              </p>
+              <p className="mb-0 text-white-50 mt-2">
+                Developed by <a 
+                  href="https://sujitmportfolio.netlify.app/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="developer-link"
+                >
+                  Sujit Manapure
+                </a>
               </p>
             </div>
             <div className="col-md-6 text-md-end">

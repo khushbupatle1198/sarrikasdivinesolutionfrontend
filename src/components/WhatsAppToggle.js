@@ -1,23 +1,26 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './WhatsAppToggle.css';
 
 const WhatsAppToggle = () => {
-  const [position, setPosition] = useState({ 
-    x: window.innerWidth / 2 - 30, // Center horizontally
-    y: window.innerHeight - 100    // Position near bottom
+  const [position, setPosition] = useState(() => {
+    const isMobile = window.innerWidth <= 768;
+    return {
+      x: isMobile ? window.innerWidth - 80 : window.innerWidth - 100,
+      y: window.innerHeight - 120
+    };
   });
   const [isDragging, setIsDragging] = useState(false);
   const [showChatBox, setShowChatBox] = useState(false);
   const [message, setMessage] = useState("");
-  const [whatsappVisible, setWhatsappVisible] = useState(true);
   const toggleRef = useRef(null);
+  const startPos = useRef({ x: 0, y: 0 });
 
-  // Handle window resize to keep toggle visible
+  // Handle window resize
   useEffect(() => {
     const handleResize = () => {
       setPosition(prev => ({
-        x: Math.min(prev.x, window.innerWidth - 60),
-        y: Math.min(prev.y, window.innerHeight - 60)
+        x: Math.min(prev.x, window.innerWidth - 80),
+        y: Math.min(prev.y, window.innerHeight - 80)
       }));
     };
 
@@ -25,62 +28,119 @@ const WhatsAppToggle = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleMouseDown = (e) => {
-    // Only start dragging if clicking on the button, not the chat box
-    if (!showChatBox || e.target.closest('.whatsapp-button')) {
+  // Common move handler
+  const handleMove = useCallback((clientX, clientY) => {
+    const newX = clientX - startPos.current.x;
+    const newY = clientY - startPos.current.y;
+    
+    setPosition({
+      x: Math.max(10, Math.min(newX, window.innerWidth - 80)),
+      y: Math.max(10, Math.min(newY, window.innerHeight - 80))
+    });
+  }, []);
+
+  // Mouse event handlers
+  const handleMouseDown = useCallback((e) => {
+    if (e.target.closest('.whatsapp-button')) {
+      startPos.current = {
+        x: e.clientX - position.x,
+        y: e.clientY - position.y
+      };
       setIsDragging(true);
       e.preventDefault();
     }
-  };
+  }, [position.x, position.y]);
 
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
-    
-    const newX = e.clientX - 30;
-    const newY = e.clientY - 30;
-    
-    setPosition({
-      x: Math.max(10, Math.min(newX, window.innerWidth - 70)),
-      y: Math.max(10, Math.min(newY, window.innerHeight - 70))
-    });
-  };
+  const handleMouseMove = useCallback((e) => {
+    if (isDragging) {
+      handleMove(e.clientX, e.clientY);
+      e.preventDefault();
+    }
+  }, [isDragging, handleMove]);
 
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback(() => {
     setIsDragging(false);
-  };
+  }, []);
 
-  const toggleChatBox = () => {
+  // Touch event handlers
+  const handleTouchStart = useCallback((e) => {
+    const touch = e.touches[0];
+    startPos.current = {
+      x: touch.clientX - position.x,
+      y: touch.clientY - position.y
+    };
+    setIsDragging(true);
+    e.preventDefault();
+  }, [position.x, position.y]);
+
+  const handleTouchMove = useCallback((e) => {
+    if (isDragging) {
+      const touch = e.touches[0];
+      handleMove(touch.clientX, touch.clientY);
+      e.preventDefault();
+    }
+  }, [isDragging, handleMove]);
+
+  const handleTouchEnd = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  // Add and remove event listeners
+  useEffect(() => {
+    const currentRef = toggleRef.current;
+    
+    if (currentRef) {
+      // Mouse events
+      currentRef.addEventListener('mousedown', handleMouseDown);
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      
+      // Touch events (with passive: false to allow preventDefault)
+      currentRef.addEventListener('touchstart', handleTouchStart, { passive: false });
+      window.addEventListener('touchmove', handleTouchMove, { passive: false });
+      window.addEventListener('touchend', handleTouchEnd);
+      
+      return () => {
+        // Mouse events
+        currentRef.removeEventListener('mousedown', handleMouseDown);
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseup', handleMouseUp);
+        
+        // Touch events
+        currentRef.removeEventListener('touchstart', handleTouchStart);
+        window.removeEventListener('touchmove', handleTouchMove);
+        window.removeEventListener('touchend', handleTouchEnd);
+      };
+    }
+  }, [handleMouseDown, handleMouseMove, handleMouseUp, handleTouchEnd, handleTouchMove, handleTouchStart]);
+
+  const toggleChatBox = useCallback(() => {
     setShowChatBox(!showChatBox);
-    setWhatsappVisible(true);
-  };
+  }, [showChatBox]);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = useCallback(() => {
     if (message.trim()) {
-      window.open(`https://wa.me/919284389450?text=${encodeURIComponent(message)}`, '_blank');
+      window.open(`https://wa.me/919067690333?text=${encodeURIComponent(message)}`, '_blank');
       setMessage("");
       setShowChatBox(false);
     }
-  };
+  }, [message]);
 
   return (
     <div 
       ref={toggleRef}
-      className={`whatsapp-float ${whatsappVisible ? 'whatsapp-visible' : 'whatsapp-hidden'}`}
+      className="whatsapp-float"
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,
-        cursor: isDragging ? 'grabbing' : 'grab'
+        cursor: isDragging ? 'grabbing' : 'pointer'
       }}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
     >
       <div className="position-relative">
         {showChatBox && (
           <div 
             className="whatsapp-chat-box shadow-lg"
-            onClick={(e) => e.stopPropagation()} // Prevent drag when clicking inside chat box
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="chat-header bg-success text-white p-3 rounded-top">
               <h6 className="mb-0">Divine Guidance</h6>
@@ -116,10 +176,7 @@ const WhatsAppToggle = () => {
         )}
         <button 
           className="whatsapp-button btn btn-success rounded-circle p-3 shadow"
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleChatBox();
-          }}
+          onClick={toggleChatBox}
         >
           <i className="bi bi-whatsapp fs-4"></i>
         </button>

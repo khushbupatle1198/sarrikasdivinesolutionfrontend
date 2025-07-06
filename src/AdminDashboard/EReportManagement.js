@@ -254,6 +254,7 @@ const EReportManagement = () => {
             <table className="table">
               <thead>
                 <tr>
+                  <th>Id</th>
                   <th>Title</th>
                   <th>Description</th>
                   <th>Price</th>
@@ -265,6 +266,7 @@ const EReportManagement = () => {
               <tbody>
                 {eReports.map(eReport => (
                   <tr key={eReport.id}>
+                    <td>{eReport.id}</td>
                     <td>{eReport.title}</td>
                     <td>{eReport.description.substring(0, 50)}...</td>
                     <td>₹{eReport.price}</td>

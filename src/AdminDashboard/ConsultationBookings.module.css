@@ -1,0 +1,415 @@
+/* ConsultationBookings.module.css */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.header h2 {
+  color: #333;
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.searchFilter {
+  display: flex;
+  gap: 8px;
+}
+
+.search {
+  position: relative;
+}
+
+.search input {
+  padding: 6px 12px 6px 30px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 200px;
+  font-size: 0.85rem;
+}
+
+.search i {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.filter {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 0.85rem;
+}
+
+.exportBtn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background-color 0.2s;
+  font-size: 0.85rem;
+}
+
+.exportBtn:hover {
+  background-color: #218838;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.spinner {
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 3px solid #3498db;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.tableContainer {
+  overflow-x: auto;
+  font-size: 0.85rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 500;
+  color: #495057;
+  border-bottom: 2px solid #dee2e6;
+  font-size: 0.85rem;
+}
+
+.table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #dee2e6;
+  vertical-align: top;
+}
+
+.compactCell {
+  padding: 6px 8px !important;
+}
+
+.customer {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #6c757d;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.details {
+  max-width: 180px;
+}
+
+.smallText {
+  font-size: 0.8rem;
+  margin: 2px 0;
+}
+
+.questions {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.status {
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.status.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status.approved {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status.rejected {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.actionButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.approveBtn, .rejectBtn, .viewBtn, .viewProofBtn {
+  padding: 4px 8px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+}
+
+.approveBtn {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.approveBtn:hover {
+  background-color: #c3e6cb;
+}
+
+.rejectBtn {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.rejectBtn:hover {
+  background-color: #f5c6cb;
+}
+
+.viewBtn {
+  background-color: #e2e3e5;
+  color: #383d41;
+}
+
+.viewBtn:hover {
+  background-color: #d6d8db;
+}
+
+.viewProofBtn {
+  background: none;
+  color: #007bff;
+}
+
+.viewProofBtn:hover {
+  text-decoration: underline;
+}
+
+.noData {
+  text-align: center;
+  padding: 20px;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.noData i {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.noProof {
+  color: #6c757d;
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .searchFilter {
+    width: 100%;
+  }
+  
+  .search input {
+    width: 100%;
+  }
+  
+  .table th, .table td {
+    padding: 6px;
+    font-size: 0.8rem;
+  }
+  
+  .actionButtons {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+/* Payment Proof Modal Styles */
+.paymentModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: white;
+  padding: 15px;
+  border-radius: 6px;
+  max-width: 90%;
+  max-height: 90%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.modalHeader h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.imageContainer {
+  flex: 1;
+  overflow: auto;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.paymentImage {
+  max-width: 100%;
+  max-height: 50vh;
+  object-fit: contain;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+
+.closeModalBtn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #777;
+  line-height: 1;
+  padding: 3px;
+}
+
+.closeModalBtn:hover {
+  color: #333;
+}
+
+.downloadBtn, .closeBtn {
+  padding: 6px 12px;
+  border-radius: 3px;
+  font-size: 0.85rem;
+}
+
+.downloadBtn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.downloadBtn:hover {
+  background-color: #45a049;
+}
+
+.closeBtn {
+  background-color: #f44336;
+  color: white;
+}
+
+.closeBtn:hover {
+  background-color: #d32f2f;
+}
+
+@media (max-width: 600px) {
+  .modalContent {
+    width: 95%;
+    padding: 10px;
+  }
+  
+  .modalFooter {
+    flex-direction: column;
+  }
+  
+  .downloadBtn,
+  .closeBtn {
+    width: 100%;
+  }
+}

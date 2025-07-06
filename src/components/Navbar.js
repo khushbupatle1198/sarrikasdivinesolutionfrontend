@@ -17,19 +17,25 @@ const Navbar = ({ navbarScrolled, navbarVisible }) => {
     <nav className={`navbar navbar-expand-lg fixed-top ${navbarScrolled ? 'navbar-scrolled' : ''} ${navbarVisible ? 'navbar-visible' : 'navbar-hidden'}`}>
       <div className="container">
         <Link className="navbar-brand" to="/" onClick={closeMenu}>
-  <img src="/logo.png" alt="Sarrika Logo" className="navbar-logo" />
-  <span className="brand-text">Sarrika's Divine Solution</span>
-</Link>
+          <img 
+            src="/logo.png" 
+            alt="Sarrika Logo" 
+            className={`navbar-logo ${navbarScrolled ? 'scrolled-logo' : ''}`} 
+          />
+          <span className="brand-text">Sarrika's Divine Solution</span>
+        </Link>
         
-        <button 
-          className="navbar-toggler" 
-          type="button" 
-          onClick={handleToggle}
-          aria-expanded={isExpanded}
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+        <div className="navbar-toggler-container">
+          <button 
+            className="navbar-toggler" 
+            type="button" 
+            onClick={handleToggle}
+            aria-expanded={isExpanded}
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+        </div>
         
         <div className={`collapse navbar-collapse ${isExpanded ? 'show' : ''}`} id="navbarNav">
           <ul className="navbar-nav ms-auto">
@@ -54,7 +60,6 @@ const Navbar = ({ navbarScrolled, navbarVisible }) => {
           </ul>
           <div className="d-flex ms-lg-3">
             <Link to="/login" className="btn btn-primary btn-glow me-2" onClick={closeMenu}>Login</Link>
-             
           </div>
         </div>
       </div>
