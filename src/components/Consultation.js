@@ -4,7 +4,8 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppToggle from './WhatsAppToggle';
 import './Consultation.css';
-import config from '../config';
+axios.post(`${config.API_BASE_URL}/api/savecourse`, data)
+
 
 const Consultation = () => {
   const [navbarScrolled, setNavbarScrolled] = useState(false);
