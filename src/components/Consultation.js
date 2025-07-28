@@ -4,7 +4,10 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppToggle from './WhatsAppToggle';
 import './Consultation.css';
-axios.post(`${config.API_BASE_URL}/api/savecourse`, data)
+import config from "../config";
+
+axios.post(`${config.API_BASE_URL}/api/savecourse`, { name: "React" });
+
 
 
 const Consultation = () => {
