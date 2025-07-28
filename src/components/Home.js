@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppToggle from './WhatsAppToggle';
-import config from '../config';
+axios.post(`${config.API_BASE_URL}/api/savecourse`, data)
+
 import './Home.css';
 
 const Home = () => {
