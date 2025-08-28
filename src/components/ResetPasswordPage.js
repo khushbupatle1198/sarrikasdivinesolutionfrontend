@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './ResetPasswordPage.module.css';
+import config from "../config";
 
 const ResetPasswordPage = () => {
   const [email, setEmail] = useState('');
