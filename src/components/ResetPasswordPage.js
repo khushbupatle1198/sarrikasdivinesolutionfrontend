@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-axios.post(`${config.API_BASE_URL}/api/savecourse`, data)
-
 import styles from './ResetPasswordPage.module.css';
 
 const ResetPasswordPage = () => {
