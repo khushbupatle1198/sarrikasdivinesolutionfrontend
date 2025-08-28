@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import config from "../config";
 
 const Login = () => {
   const [email, setEmail] = useState('');
