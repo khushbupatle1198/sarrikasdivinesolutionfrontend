@@ -5,6 +5,7 @@ import Footer from './Footer';
 import WhatsAppToggle from './WhatsAppToggle';
 import './Consultation.css';
 import config from "../config";
+import axios from "axios";
 
 axios.post(`${config.API_BASE_URL}/api/savecourse`, { name: "React" });
 
