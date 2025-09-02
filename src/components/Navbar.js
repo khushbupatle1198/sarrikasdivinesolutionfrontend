@@ -18,7 +18,7 @@ const Navbar = ({ navbarScrolled, navbarVisible }) => {
       <div className="container">
         <Link className="navbar-brand" to="/" onClick={closeMenu}>
           <img 
-            src="https://www.sarrikasdivinesolution.com//logo.png" 
+            src="https://www.sarrikasdivinesolution.com/logo.png" 
             alt="Sarrika Logo" 
             className={`navbar-logo ${navbarScrolled ? 'scrolled-logo' : ''}`} 
           />
